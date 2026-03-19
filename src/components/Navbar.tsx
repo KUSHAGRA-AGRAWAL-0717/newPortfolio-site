@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -17,29 +17,36 @@ export default function Navbar() {
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
   ) => {
-    e.preventDefault();
+    const id = href.replace("#", "");
 
     if (href === "#" || href === "") {
+      e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
       setMobileOpen(false);
       return;
     }
-
-    const id = href.replace("#", "");
-    const target = document.getElementById(id);
-
-    if (target) {
-      const navbarOffset = 80;
-      const targetPosition =
-        target.getBoundingClientRect().top + window.scrollY - navbarOffset;
-
-      window.scrollTo({
-        top: targetPosition,
-        behavior: "smooth",
-      });
-    }
-
+    // For section hash links like "#skills", force scroll ourselves.
+    // We prevent default hash handling to avoid inconsistent behavior on mobile.
+    e.preventDefault();
     setMobileOpen(false);
+
+    requestAnimationFrame(() => {
+      const targetAfterMenu = id ? document.getElementById(id) : null;
+      if (!targetAfterMenu) return;
+
+      const headerOffset = 80; // match fixed navbar height (h-16) + small gap
+      const targetY =
+        targetAfterMenu.getBoundingClientRect().top +
+        window.scrollY -
+        headerOffset;
+      const clampedY = Math.max(0, targetY);
+
+      const scrollingEl =
+        document.scrollingElement || document.documentElement || document.body;
+      scrollingEl.scrollTop = clampedY;
+      document.body.scrollTop = clampedY;
+      window.scrollTo({ top: clampedY, behavior: "auto" });
+    });
   };
 
   useEffect(() => {
