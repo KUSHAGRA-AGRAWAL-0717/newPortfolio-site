@@ -13,6 +13,35 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    e.preventDefault();
+
+    if (href === "#" || href === "") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setMobileOpen(false);
+      return;
+    }
+
+    const id = href.replace("#", "");
+    const target = document.getElementById(id);
+
+    if (target) {
+      const navbarOffset = 80;
+      const targetPosition =
+        target.getBoundingClientRect().top + window.scrollY - navbarOffset;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+
+    setMobileOpen(false);
+  };
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
@@ -30,6 +59,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <a
           href="#"
+          onClick={(e) => handleNavClick(e, "#")}
           className="font-bold tracking-tighter text-xl text-foreground"
         >
           KA<span className="text-accent">.</span>
@@ -40,6 +70,7 @@ export default function Navbar() {
             <a
               key={l.href}
               href={l.href}
+              onClick={(e) => handleNavClick(e, l.href)}
               className="text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-accent after:transition-all after:duration-300 hover:after:w-full"
             >
               {l.label}
@@ -47,6 +78,7 @@ export default function Navbar() {
           ))}
           <a
             href="#contact"
+            onClick={(e) => handleNavClick(e, "#contact")}
             className="gradient-btn px-5 py-2 text-sm font-semibold rounded-full text-accent-foreground transition-all hover:scale-105 hover:shadow-[0_0_20px_-5px_hsla(180,100%,50%,0.3)]"
           >
             Hire Me
@@ -74,7 +106,7 @@ export default function Navbar() {
                 <a
                   key={l.href}
                   href={l.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => handleNavClick(e, l.href)}
                   className="block text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
                 >
                   {l.label}
@@ -82,7 +114,7 @@ export default function Navbar() {
               ))}
               <a
                 href="#contact"
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => handleNavClick(e, "#contact")}
                 className="block gradient-btn px-5 py-2 text-sm font-semibold rounded-full text-accent-foreground text-center"
               >
                 Hire Me
