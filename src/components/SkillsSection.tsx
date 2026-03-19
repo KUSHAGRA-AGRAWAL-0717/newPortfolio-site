@@ -87,7 +87,7 @@ function SkillBar({ name, level, delay }: { name: string; level: number; delay: 
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="py-24 px-6">
+    <section id="skills" className="py-24 px-6 scroll-mt-24">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
