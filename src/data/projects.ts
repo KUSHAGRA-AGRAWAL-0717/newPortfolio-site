@@ -38,8 +38,36 @@ export const PROJECTS: Project[] = [
     image: outrankpilotImg,
     video:
       "https://drive.google.com/file/d/1JD1yWL4VUuyVV1GSMjsSwgsIHDCcWNnO/preview",
-    github: "https://github.com/KUSHAGRA-AGRAWAL-0717",
+    github: "https://github.com/KUSHAGRA-AGRAWAL-0717/outrankPilot",
     link: "https://outrankpilot.com",
+    featured: true,
+  },
+  {
+    title: "MP3 Converter Microservices Platform",
+    category: "Backend",
+    tag: "Event-Driven System",
+    year: "2026",
+    description:
+      "Production-style event-driven microservices platform converting video files to MP3 using an asynchronous pipeline. Features JWT auth, API Gateway routing, and MongoDB GridFS file handling.",
+    tech: ["Python", "FastAPI", "RabbitMQ", "Docker", "Kubernetes", "MongoDB", "NGINX"],
+    impact:
+      "End-to-end scalable workflow supporting upload → convert → notify → download",
+    image: mvpcxImg, // Placeholder, can be swapped with a real screenshot
+    github: "https://github.com/KUSHAGRA-AGRAWAL-0717/kubernetes-rabbitMq",
+    featured: true,
+  },
+  {
+    title: "Production-Grade Scalable Backend System",
+    category: "Backend",
+    tag: "Microservices",
+    year: "2026",
+    description:
+      "Architected a microservices-based backend platform simulating a ride management system with independent User, Captain, and Ride services.",
+    tech: ["Node.js", "Express", "MongoDB", "RabbitMQ", "Docker", "NGINX"],
+    impact:
+      "Event-driven architecture with centralized API Gateway and long-polling for real-time status",
+    image: defiImg, // Placeholder
+    github: "https://github.com/KUSHAGRA-AGRAWAL-0717/microservices",
     featured: true,
   },
   {
@@ -160,4 +188,4 @@ export const PROJECTS: Project[] = [
   },
 ];
 
-export const CATEGORIES = ["All", "SaaS", "AI", "Web App"];
+export const CATEGORIES = ["All", "SaaS", "AI", "Web App", "Backend"];

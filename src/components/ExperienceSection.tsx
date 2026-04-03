@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Briefcase, GraduationCap, Trophy, Calendar, MapPin } from "lucide-react";
+import { Briefcase, GraduationCap, Trophy, Calendar } from "lucide-react";
 
 const EXPERIENCE = [
   {
@@ -7,7 +7,8 @@ const EXPERIENCE = [
     company: "Global Holani Tradelink",
     period: "Jun 2025 — Jul 2025",
     type: "Remote",
-    description: "Architected an OCR invoice processing system using LangChain and OpenAI with 95%+ accuracy.",
+    description:
+      "Architected an OCR invoice processing system using LangChain and OpenAI with 95%+ accuracy.",
     bullets: [
       "Achieved 95%+ accuracy when parsing semi-structured invoices",
       "Optimized API performance through prompt engineering and caching",
@@ -15,131 +16,160 @@ const EXPERIENCE = [
       "Built scalable backend workflows for automated document extraction",
     ],
     tags: ["LangChain", "OpenAI", "Python", "OCR"],
+    current: false,
   },
   {
     title: "React JS Intern",
     company: "Vitraga Solutions",
     period: "Apr 2025 — May 2025",
     type: "Remote",
-    description: "Improved and debugged multiple production systems built with React, Node.js, and MongoDB.",
+    description:
+      "Improved and debugged multiple production systems built with React, Node.js, and MongoDB.",
     bullets: [
       "Reduced API response latency by 40% (250ms → 150ms)",
       "Contributed across four different application domains",
-      "Ensured stable deployment",
+      "Ensured stable deployment processes",
       "Optimized React components for better performance",
     ],
     tags: ["React", "Node.js", "MongoDB", "JavaScript"],
+    current: false,
   },
   {
     title: "Freelance Software Developer",
     company: "Self-Employed",
     period: "2024 — Present",
     type: "Remote",
-    description: "Worked with startups and independent clients building SaaS platforms, AI automation systems, and full-stack web applications.",
+    description:
+      "Worked with startups and independent clients building SaaS platforms, AI automation systems, and full-stack web applications.",
     bullets: [
-      "Delivered end-to-end systems including frontend UI, backend APIs, database architecture",
-      "Built AI integrations for multiple clients",
+      "Delivered end-to-end systems including frontend UI, backend APIs, and database architecture",
+      "Built AI integrations for multiple clients across different domains",
       "Designed scalable SaaS architectures",
-      "Data processing pipelines for automation",
+      "Built data processing pipelines for automation",
     ],
-    tags: ["React", "Node.js", "Python", "AI/ML", "Cloud Infrastructure"],
+    tags: ["React", "Node.js", "Python", "AI/ML", "Cloud"],
+    current: true,
   },
 ];
 
 const ACHIEVEMENTS = [
-  { title: "Hacknovate 6.0", detail: "Ranked Top 1.5% (45 / 3000+ participants)" },
-  { title: "LeetCode", detail: "Global Rank 347 (Contest) | Rating 1700 | 700+ problems solved | 150+ day streak" },
-  { title: "GirlScript Summer of Code", detail: "Selected contributor for GSSOC 2024" },
-  { title: "Energy Quest 2.0", detail: "Finalist with 92nd percentile trading simulation performance" },
+  {
+    icon: "🏆",
+    title: "Hacknovate 6.0",
+    detail: "Ranked Top 1.5% — 45th out of 3000+ participants",
+  },
+  {
+    icon: "💻",
+    title: "LeetCode",
+    detail: "Global Rank 347 (Contest) · Rating 1700 · 700+ problems · 150+ day streak",
+  },
+  {
+    icon: "🌐",
+    title: "GirlScript Summer of Code",
+    detail: "Selected open source contributor for GSSOC 2024",
+  },
+  {
+    icon: "⚡",
+    title: "Energy Quest 2.0",
+    detail: "Finalist — 92nd percentile in trading simulation",
+  },
 ];
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="py-24 px-6 scroll-mt-24">
+    <section id="experience" className="py-16 px-4 sm:px-6 scroll-mt-20">
       <div className="max-w-7xl mx-auto">
+        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <span className="section-badge mb-4 inline-flex">
-            <Briefcase size={14} />
+            <Briefcase size={13} />
             Journey
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-3 tracking-tight">
             Work <span className="gradient-text">Experience</span>
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            Professional journey building impactful solutions for businesses and startups
+          <p className="text-muted-foreground/80 max-w-lg mx-auto text-sm">
+            Professional journey building impactful solutions for businesses and startups.
           </p>
         </motion.div>
 
-        {/* Two-column layout: Timeline left, Education/Achievements right */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
-          {/* Timeline - left side */}
+          {/* Timeline — left (3/5) */}
           <div className="lg:col-span-3 relative">
             {/* Vertical timeline line */}
-            <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-accent/60 via-primary/40 to-transparent hidden md:block" />
+            <div className="absolute left-4 top-0 bottom-0 w-px bg-border/70 hidden md:block" />
 
-            <div className="space-y-8">
+            <div className="space-y-6">
               {EXPERIENCE.map((exp, i) => (
                 <motion.div
                   key={exp.title}
-                  initial={{ opacity: 0, x: -40 }}
+                  initial={{ opacity: 0, x: -32 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ delay: i * 0.12, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                   className="relative md:pl-12"
                 >
                   {/* Timeline dot */}
-                  <div className="absolute left-2.5 top-6 w-3 h-3 rounded-full bg-accent shadow-[0_0_12px_hsla(180,100%,50%,0.5)] hidden md:block" />
+                  <div
+                    className={`timeline-dot left-2 top-6 hidden md:block ${
+                      exp.current ? "ring-2 ring-accent/30 ring-offset-2 ring-offset-background" : ""
+                    }`}
+                  />
 
-                  <div className="glass rounded-2xl p-6 md:p-8 hover:border-accent/30 transition-all duration-500 group">
+                  <div className="card-hover rounded-xl p-6 group">
                     {/* Header */}
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
                       <div>
-                        <h3 className="text-lg font-bold text-foreground group-hover:text-accent transition-colors duration-300">{exp.title}</h3>
-                        <p className="text-accent font-semibold text-sm">{exp.company}</p>
+                        <h3 className="text-base font-bold text-foreground group-hover:text-accent transition-colors duration-200">
+                          {exp.title}
+                        </h3>
+                        <p className="text-sm font-semibold text-accent/90 mt-0.5">
+                          {exp.company}
+                        </p>
                       </div>
-                      <span className="px-3 py-1 rounded-full glass text-xs font-medium text-muted-foreground border border-accent/20 self-start whitespace-nowrap">
-                        {exp.type}
-                      </span>
+                      <div className="flex flex-wrap gap-2 flex-shrink-0">
+                        {exp.current && (
+                          <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-slow" />
+                            Active
+                          </span>
+                        )}
+                        <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-secondary border border-border text-muted-foreground">
+                          {exp.type}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Date */}
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4 font-mono">
-                      <Calendar size={12} className="text-accent/70" />
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-3 font-mono">
+                      <Calendar size={11} className="text-accent/60" />
                       {exp.period}
                     </div>
 
                     {/* Description */}
-                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{exp.description}</p>
+                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                      {exp.description}
+                    </p>
 
-                    {/* Bullet points */}
-                    <ul className="space-y-2.5 mb-5">
+                    {/* Bullets */}
+                    <ul className="space-y-2 mb-4">
                       {exp.bullets.map((b, bi) => (
-                        <motion.li
-                          key={bi}
-                          initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: i * 0.15 + bi * 0.05 }}
-                          className="text-sm text-muted-foreground flex gap-3 items-start"
-                        >
-                          <span className="text-accent mt-1.5 flex-shrink-0">→</span>
+                        <li key={bi} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                          <span className="text-accent/70 mt-1 text-xs flex-shrink-0">▸</span>
                           {b}
-                        </motion.li>
+                        </li>
                       ))}
                     </ul>
 
-                    {/* Tech tags */}
-                    <div className="flex flex-wrap gap-2">
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-1.5">
                       {exp.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1 rounded-full text-[11px] font-medium glass text-accent/80 border border-accent/15 hover:border-accent/40 transition-colors"
-                        >
+                        <span key={tag} className="skill-chip text-[11px]">
                           {tag}
                         </span>
                       ))}
@@ -150,63 +180,73 @@ export default function ExperienceSection() {
             </div>
           </div>
 
-          {/* Right sidebar: Education + Achievements */}
+          {/* Right sidebar — Education + Achievements (2/5) */}
           <div className="lg:col-span-2 space-y-8">
             {/* Education */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.15 }}
             >
-              <h3 className="text-xl font-bold text-foreground mb-5 flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-accent shadow-[0_0_8px_hsla(180,100%,50%,0.4)]" />
+              <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
+                <GraduationCap size={14} className="text-accent" />
                 Education
               </h3>
-              <div className="glass rounded-2xl p-6 hover:border-accent/30 transition-all duration-500">
-                <div className="flex items-start gap-3 mb-3">
-                  <GraduationCap size={20} className="text-accent mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h4 className="text-base font-bold text-foreground">
-                      Bachelor of Technology – Information Technology
+              <div className="card-hover rounded-xl p-5">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg icon-btn flex-shrink-0 text-lg">
+                    🎓
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-bold text-foreground leading-snug">
+                      B.Tech — Information Technology
                     </h4>
-                    <p className="text-accent font-semibold text-sm mt-1">National Institute of Technology Jalandhar</p>
-                    <p className="text-xs text-muted-foreground mt-1 font-mono">2023 – Present</p>
+                    <p className="text-xs font-semibold text-accent/90 mt-1">
+                      NIT Jalandhar
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5 font-mono">
+                      2023 – Present
+                    </p>
                   </div>
                 </div>
-                <div className="mt-3 flex justify-end">
-                  <span className="px-3 py-1 rounded-full text-xs font-bold gradient-btn text-accent-foreground">
-                    CGPA: 7.99 / 10
-                  </span>
+                <div className="mt-4 pt-4 border-t border-border/60 flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">CGPA</span>
+                  <span className="text-sm font-bold text-foreground">7.99 / 10</span>
                 </div>
               </div>
             </motion.div>
 
             {/* Achievements */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.25 }}
             >
-              <h3 className="text-xl font-bold text-foreground mb-5 flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-accent shadow-[0_0_8px_hsla(180,100%,50%,0.4)]" />
+              <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
+                <Trophy size={14} className="text-accent" />
                 Achievements
               </h3>
               <div className="space-y-3">
                 {ACHIEVEMENTS.map((a, i) => (
                   <motion.div
                     key={a.title}
-                    initial={{ opacity: 0, y: 15 }}
+                    initial={{ opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.3 + i * 0.1 }}
-                    className="glass rounded-xl p-5 hover:border-accent/30 transition-all duration-500 group"
+                    transition={{ delay: 0.25 + i * 0.08 }}
+                    className="card-hover rounded-xl p-4 group flex items-start gap-3"
                   >
-                    <h4 className="text-sm font-bold text-foreground mb-1 group-hover:text-accent transition-colors duration-300">
-                      {a.title}
-                    </h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{a.detail}</p>
+                    <span className="text-xl flex-shrink-0 mt-0.5">{a.icon}</span>
+                    <div>
+                      <h4 className="text-sm font-bold text-foreground group-hover:text-accent transition-colors duration-200">
+                        {a.title}
+                      </h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+                        {a.detail}
+                      </p>
+                    </div>
                   </motion.div>
                 ))}
               </div>

@@ -1,10 +1,12 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ProjectsSection from "@/components/ProjectsSection";
+import ServicesSection from "@/components/ServicesSection";
 import SkillsSection from "@/components/SkillsSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import ContactSection from "@/components/ContactSection";
 import FooterSection from "@/components/FooterSection";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Index = () => {
   return (
@@ -19,11 +21,13 @@ const Index = () => {
       <div className="relative z-10">
         <Navbar />
         <HeroSection />
+        <ServicesSection />
         <ProjectsSection />
         <SkillsSection />
         <ExperienceSection />
         <ContactSection />
         <FooterSection />
+        <ThemeToggle />
       </div>
     </div>
   );

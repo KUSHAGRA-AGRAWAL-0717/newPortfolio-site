@@ -1,28 +1,41 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Github, ExternalLink, Play, X } from "lucide-react";
 import type { Project } from "@/data/projects";
 
 const DEFAULT_GITHUB = "https://github.com/KUSHAGRA-AGRAWAL-0717";
 
+const CATEGORY_STYLES: Record<string, string> = {
+  SaaS: "badge-saas",
+  AI: "badge-ai",
+  "Web App": "badge-webapp",
+};
+
 export default function ProjectCard({ project, index }: { project: Project; index: number }) {
   const [showVideo, setShowVideo] = useState(false);
   const githubLink = project.github || DEFAULT_GITHUB;
+  const badgeClass = CATEGORY_STYLES[project.category] || "badge-saas";
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ delay: index * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="group"
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ delay: index * 0.07, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      className="group h-full"
     >
-      <div className="glass rounded-1xl overflow-hidden hover:border-accent/30 transition-all duration-500 hover:shadow-[0_0_30px_-10px_hsla(180,100%,50%,0.15)]">
-        {/* TV Display */}
-        <div className="relative">
-          <div className="tv-frame aspect-video relative bg-card">
+      <div className="card-hover h-full flex flex-col rounded-xl overflow-hidden">
+        {/* Image / Video area */}
+        <div className="relative aspect-video overflow-hidden bg-card flex-shrink-0">
+          <AnimatePresence mode="wait">
             {showVideo && project.video ? (
-              <div className="relative w-full h-full">
+              <motion.div
+                key="video"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="w-full h-full"
+              >
                 <iframe
                   src={project.video}
                   className="w-full h-full"
@@ -31,91 +44,113 @@ export default function ProjectCard({ project, index }: { project: Project; inde
                 />
                 <button
                   onClick={() => setShowVideo(false)}
-                  className="absolute top-3 right-3 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-foreground hover:bg-destructive transition-colors z-10"
+                  className="absolute top-3 right-3 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-foreground hover:bg-destructive/80 transition-colors z-10"
+                  aria-label="Close video"
                 >
-                  <X size={16} />
+                  <X size={15} />
                 </button>
-              </div>
+              </motion.div>
             ) : (
-              <div className="relative w-full h-full">
+              <motion.div
+                key="image"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="relative w-full h-full"
+              >
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover grayscale-[0.15] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-transparent opacity-50 pointer-events-none" />
-                
-                {project.video && (
-                  <button
-                    onClick={() => setShowVideo(true)}
-                    className="absolute inset-0 flex items-center justify-center z-10"
-                  >
-                    <div className="w-14 h-14 rounded-full gradient-btn flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-                      <Play size={22} className="text-accent-foreground ml-0.5" fill="currentColor" />
-                    </div>
-                  </button>
-                )}
-
-                <div className="absolute top-3 left-3 px-2.5 py-1 rounded-md glass text-xs font-mono text-foreground">
-                  {project.year}
+                {/* Overlay on hover */}
+                <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
+                  {project.video && (
+                    <button
+                      onClick={() => setShowVideo(true)}
+                      className="btn-primary px-4 py-2 rounded-lg text-xs gap-1.5"
+                    >
+                      <Play size={13} fill="currentColor" />
+                      Watch Demo
+                    </button>
+                  )}
+                  {project.link && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-ghost px-4 py-2 rounded-lg text-xs gap-1.5"
+                    >
+                      <ExternalLink size={13} />
+                      Live Site
+                    </a>
+                  )}
                 </div>
-                {project.featured && (
-                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-md gradient-btn text-xs font-bold text-accent-foreground">
-                    Featured
-                  </div>
-                )}
 
-                {project.video && (
-                  <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md glass text-xs text-foreground">
-                    <Play size={12} fill="currentColor" />
-                    Video Demo
-                  </div>
-                )}
-              </div>
+                {/* Top badges */}
+                <div className="absolute top-3 left-3 flex gap-2">
+                  <span className={`px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider border ${badgeClass}`}>
+                    {project.category}
+                  </span>
+                  {project.featured && (
+                    <span className="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 border border-amber-500/35 text-amber-400">
+                      Featured
+                    </span>
+                  )}
+                </div>
+                <div className="absolute top-3 right-3">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono text-muted-foreground glass border-0">
+                    {project.year}
+                  </span>
+                </div>
+              </motion.div>
             )}
-          </div>
-          <div className="mx-auto h-1.5 w-3/5 bg-accent/15 blur-lg rounded-[100%] mt-1" />
+          </AnimatePresence>
         </div>
 
-        {/* Info */}
-        <div className="p-6 space-y-3">
-          <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-medium uppercase tracking-wider glass text-accent/70 border border-accent/15">
-            {project.category}
-          </span>
+        {/* Card body */}
+        <div className="p-5 flex flex-col flex-1 gap-3">
+          <div>
+            <h3 className="text-base font-bold text-foreground group-hover:text-accent transition-colors duration-200 mb-1">
+              {project.title}
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+              {project.description}
+            </p>
+          </div>
 
-          <h3 className="text-xl font-bold text-foreground group-hover:text-accent transition-colors duration-300">{project.title}</h3>
-
-          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
-            {project.description}
-          </p>
-
-          <div className="flex flex-wrap gap-1.5">
+          {/* Tech stack */}
+          <div className="flex flex-wrap gap-1.5 flex-1">
             {project.tech.slice(0, 4).map((t) => (
               <span
                 key={t}
-                className="px-2 py-0.5 text-[10px] font-medium rounded glass text-accent/60 border border-accent/10"
+                className="px-2.5 py-1 text-[11px] font-medium rounded-md skill-chip"
               >
                 {t}
               </span>
             ))}
             {project.tech.length > 4 && (
-              <span className="px-2 py-0.5 text-[10px] font-medium rounded glass text-muted-foreground">
+              <span className="px-2.5 py-1 text-[11px] font-medium rounded-md skill-chip">
                 +{project.tech.length - 4}
               </span>
             )}
           </div>
 
-          <p className="text-xs text-accent font-medium">{project.impact}</p>
+          {/* Impact */}
+          <p className="text-xs text-accent/90 font-medium leading-snug border-l-2 border-accent/30 pl-2.5">
+            {project.impact}
+          </p>
 
-          <div className="flex gap-2 pt-2">
+          {/* Action buttons */}
+          <div className="flex gap-2 pt-1">
             <a
               href={githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 glass rounded-lg py-2.5 text-xs font-medium text-muted-foreground hover:text-accent hover:border-accent/30 flex items-center justify-center gap-2 transition-all duration-300"
+              className="btn-ghost flex-1 rounded-lg py-2.5 text-xs gap-1.5"
             >
-              <Github size={14} />
+              <Github size={13} />
               Code
             </a>
             {project.link && (
@@ -123,11 +158,20 @@ export default function ProjectCard({ project, index }: { project: Project; inde
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 gradient-btn rounded-lg py-2.5 text-xs font-bold text-accent-foreground flex items-center justify-center gap-2 transition-all hover:scale-[1.02]"
+                className="btn-primary flex-1 rounded-lg py-2.5 text-xs gap-1.5"
               >
-                <ExternalLink size={14} />
+                <ExternalLink size={13} />
                 Live Demo
               </a>
+            )}
+            {!project.link && project.video && (
+              <button
+                onClick={() => setShowVideo(true)}
+                className="btn-primary flex-1 rounded-lg py-2.5 text-xs gap-1.5"
+              >
+                <Play size={13} fill="currentColor" />
+                Demo
+              </button>
             )}
           </div>
         </div>

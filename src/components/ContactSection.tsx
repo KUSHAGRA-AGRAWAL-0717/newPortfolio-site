@@ -13,11 +13,27 @@ import {
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
+const CONTACT_ITEMS = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: "kushagraagrawal.9672@gmail.com",
+    href: "mailto:kushagraagrawal.9672@gmail.com",
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: "+91 9672048846",
+    href: "tel:+919672048846",
+  },
+  { icon: MapPin, label: "Location", value: "India", href: null },
+];
+
 const SOCIALS = [
-  { icon: Github, href: "https://github.com/KUSHAGRA-AGRAWAL-0717" },
-  { icon: Linkedin, href: "https://linkedin.com/in/kushagraagrawal017" },
-  { icon: Code, href: "https://leetcode.com/u/Kushagra_0717" },
-  { icon: Mail, href: "mailto:kushagraagrawal.9672@gmail.com" },
+  { icon: Github, href: "https://github.com/KUSHAGRA-AGRAWAL-0717", label: "GitHub" },
+  { icon: Linkedin, href: "https://linkedin.com/in/kushagraagrawal017", label: "LinkedIn" },
+  { icon: Code, href: "https://leetcode.com/u/Kushagra_0717", label: "LeetCode" },
+  { icon: Mail, href: "mailto:kushagraagrawal.9672@gmail.com", label: "Email" },
 ];
 
 export default function ContactSection() {
@@ -35,28 +51,16 @@ export default function ContactSection() {
     const form = formRef.current;
     if (!form) return;
 
-    const name =
-      (form.querySelector('input[name="user_name"]') as HTMLInputElement)
-        ?.value || "";
-    const email =
-      (form.querySelector('input[name="user_email"]') as HTMLInputElement)
-        ?.value || "";
-    const phone =
-      (form.querySelector('input[name="user_phone"]') as HTMLInputElement)
-        ?.value || "";
-    const subject =
-      (form.querySelector('input[name="user_subject"]') as HTMLInputElement)
-        ?.value || "";
-    const message =
-      (form.querySelector('textarea[name="message"]') as HTMLTextAreaElement)
-        ?.value || "";
+    const name = (form.querySelector('input[name="user_name"]') as HTMLInputElement)?.value || "";
+    const email = (form.querySelector('input[name="user_email"]') as HTMLInputElement)?.value || "";
+    const phone = (form.querySelector('input[name="user_phone"]') as HTMLInputElement)?.value || "";
+    const subject = (form.querySelector('input[name="user_subject"]') as HTMLInputElement)?.value || "";
+    const message = (form.querySelector('textarea[name="message"]') as HTMLTextAreaElement)?.value || "";
 
     const fullMessage = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nSubject: ${subject}\nMessage: ${message}`;
 
     const injectHidden = (fieldName: string, value: string) => {
-      let el = form.querySelector(
-        `input[name="${fieldName}"]`,
-      ) as HTMLInputElement;
+      let el = form.querySelector(`input[name="${fieldName}"]`) as HTMLInputElement;
       if (!el) {
         el = document.createElement("input");
         el.type = "hidden";
@@ -70,9 +74,7 @@ export default function ContactSection() {
     injectHidden("hidden_email", email);
     injectHidden("hidden_subject", subject);
 
-    const msgField = form.querySelector(
-      'textarea[name="message"]',
-    ) as HTMLTextAreaElement;
+    const msgField = form.querySelector('textarea[name="message"]') as HTMLTextAreaElement;
     if (msgField) msgField.value = fullMessage;
 
     emailjs
@@ -86,88 +88,81 @@ export default function ContactSection() {
         setSending(false);
         setSuccess(true);
         formRef.current?.reset();
-        setTimeout(() => setSuccess(false), 3200);
+        setTimeout(() => setSuccess(false), 4000);
       })
       .catch((err) => {
         setSending(false);
-        setError("Failed to send email. Please try again later.");
+        setError("Failed to send. Please try again or email me directly.");
         console.error("FAILED...", err?.text || err);
       });
   };
 
   return (
-    <section id="contact" className="py-24 px-6 scroll-mt-24">
+    <section id="contact" className="py-16 px-4 sm:px-6 scroll-mt-20">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <span className="section-badge mb-4 inline-flex">
-            <Send size={14} />
+            <Send size={13} />
             Get In Touch
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-3 tracking-tight">
             Let's Work <span className="gradient-text">Together</span>
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            Have a project in mind? Let's discuss how I can help bring your
-            ideas to life
+          <p className="text-muted-foreground/80 max-w-lg mx-auto text-sm">
+            Have a project in mind? Let's discuss how I can help bring your ideas to life.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-5 gap-8">
-          {/* Contact info */}
+        <div className="grid md:grid-cols-5 gap-8 items-start">
+          {/* Contact info sidebar */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="md:col-span-2 space-y-8"
+            className="md:col-span-2 space-y-6"
           >
+            {/* Available badge */}
+            <div className="card-base rounded-xl p-5 border border-border/60">
+              <div className="flex items-center gap-2.5 mb-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-slow" />
+                <span className="text-sm font-bold text-foreground">Available for Work</span>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Currently accepting freelance projects and full-time opportunities.
+              </p>
+            </div>
+
+            {/* Contact details */}
             <div>
-              <h3 className="text-lg font-bold text-foreground mb-6">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
                 Contact Information
               </h3>
-              <div className="space-y-5">
-                {[
-                  {
-                    icon: Mail,
-                    label: "Email",
-                    value: "kushagraagrawal.9672@gmail.com",
-                    href: "mailto:kushagraagrawal.9672@gmail.com",
-                  },
-                  {
-                    icon: Phone,
-                    label: "Phone",
-                    value: "+91 9672048846",
-                    href: "tel:+919672048846",
-                  },
-                  { icon: MapPin, label: "Location", value: "India" },
-                ].map((item) => (
+              <div className="space-y-4">
+                {CONTACT_ITEMS.map((item) => (
                   <motion.div
                     key={item.label}
-                    whileHover={{ x: 4 }}
-                    className="flex items-start gap-4 group"
+                    whileHover={{ x: 3 }}
+                    className="flex items-center gap-3 group"
                   >
-                    <div className="w-10 h-10 rounded-lg glass flex items-center justify-center text-accent group-hover:border-accent/40 group-hover:shadow-[0_0_12px_-3px_hsla(180,100%,50%,0.25)] transition-all duration-300 flex-shrink-0">
-                      <item.icon size={18} />
+                    <div className="icon-btn w-9 h-9 rounded-lg flex-shrink-0 group-hover:border-accent/40">
+                      <item.icon size={15} />
                     </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">
-                        {item.label}
-                      </p>
+                    <div className="min-w-0">
+                      <p className="text-xs text-muted-foreground">{item.label}</p>
                       {item.href ? (
                         <a
                           href={item.href}
-                          className="text-sm text-foreground font-medium hover:text-accent transition-colors"
+                          className="text-sm font-medium text-foreground hover:text-accent transition-colors truncate block"
                         >
                           {item.value}
                         </a>
                       ) : (
-                        <p className="text-sm text-foreground font-medium">
-                          {item.value}
-                        </p>
+                        <p className="text-sm font-medium text-foreground">{item.value}</p>
                       )}
                     </div>
                   </motion.div>
@@ -175,46 +170,32 @@ export default function ContactSection() {
               </div>
             </div>
 
+            {/* Social links */}
             <div>
-              <h4 className="text-sm font-bold text-foreground mb-3">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
                 Connect With Me
-              </h4>
+              </h3>
               <div className="flex gap-2">
-                {SOCIALS.map((s, i) => (
+                {SOCIALS.map((s) => (
                   <motion.a
-                    key={i}
+                    key={s.label}
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ y: -3, scale: 1.05 }}
-                    className="w-10 h-10 rounded-lg glass flex items-center justify-center text-muted-foreground hover:text-accent hover:border-accent/40 hover:shadow-[0_0_12px_-3px_hsla(180,100%,50%,0.25)] transition-all duration-300"
+                    aria-label={s.label}
+                    whileHover={{ y: -3 }}
+                    className="icon-btn w-10 h-10 rounded-lg"
                   >
                     <s.icon size={16} />
                   </motion.a>
                 ))}
               </div>
             </div>
-
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="gradient-btn rounded-xl p-5 shadow-[0_0_25px_-5px_hsla(180,100%,50%,0.2)]"
-            >
-              <div className="flex items-center gap-2 mb-1">
-                <span className="w-2 h-2 rounded-full bg-accent-foreground animate-pulse" />
-                <span className="text-sm font-bold text-accent-foreground">
-                  Available for Work
-                </span>
-              </div>
-              <p className="text-xs text-accent-foreground/80">
-                Currently accepting freelance projects and full-time
-                opportunities
-              </p>
-            </motion.div>
           </motion.div>
 
-          {/* Form */}
+          {/* Contact form */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="md:col-span-3"
@@ -222,12 +203,12 @@ export default function ContactSection() {
             <form
               ref={formRef}
               onSubmit={sendEmail}
-              className="glass rounded-2xl p-8 space-y-5 hover:border-accent/20 transition-all duration-500"
+              className="card-base rounded-xl p-6 sm:p-8 space-y-5"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">
-                    Your Name *
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                    Name <span className="text-accent">*</span>
                   </label>
                   <input
                     name="user_name"
@@ -237,8 +218,8 @@ export default function ContactSection() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">
-                    Your Email *
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                    Email <span className="text-accent">*</span>
                   </label>
                   <input
                     name="user_email"
@@ -251,8 +232,8 @@ export default function ContactSection() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">
-                  Phone Number
+                <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  Phone
                 </label>
                 <input
                   name="user_phone"
@@ -263,8 +244,8 @@ export default function ContactSection() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">
-                  Subject *
+                <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  Subject <span className="text-accent">*</span>
                 </label>
                 <input
                   name="user_subject"
@@ -275,8 +256,8 @@ export default function ContactSection() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">
-                  Message *
+                <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  Message <span className="text-accent">*</span>
                 </label>
                 <textarea
                   name="message"
@@ -290,27 +271,23 @@ export default function ContactSection() {
               <motion.button
                 type="submit"
                 disabled={sending}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                className="w-full gradient-btn py-3.5 rounded-xl text-sm font-semibold text-accent-foreground flex items-center justify-center gap-2 transition-all hover:shadow-[0_0_25px_-5px_hsla(180,100%,50%,0.3)] disabled:opacity-60"
+                whileHover={{ scale: 1.008 }}
+                whileTap={{ scale: 0.995 }}
+                className="btn-primary w-full rounded-lg py-3.5 text-sm gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {sending ? (
                   <>
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{
-                        repeat: Infinity,
-                        duration: 1,
-                        ease: "linear",
-                      }}
-                      className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full"
+                      transition={{ repeat: Infinity, duration: 0.9, ease: "linear" }}
+                      className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
                     />
                     Sending...
                   </>
                 ) : (
                   <>
                     Send Message
-                    <Send size={16} />
+                    <Send size={15} />
                   </>
                 )}
               </motion.button>
@@ -318,23 +295,23 @@ export default function ContactSection() {
               <AnimatePresence>
                 {success && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="flex items-center justify-center gap-2 text-accent text-sm font-medium"
+                    className="flex items-center justify-center gap-2 text-emerald-400 text-sm font-medium py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20"
                   >
-                    <CheckCircle size={16} />
-                    Message sent successfully! I'll be in touch soon.
+                    <CheckCircle size={15} />
+                    Message sent! I'll reply within 24 hours.
                   </motion.div>
                 )}
                 {error && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="flex items-center justify-center gap-2 text-destructive text-sm"
+                    className="flex items-center justify-center gap-2 text-destructive text-sm py-2 rounded-lg bg-destructive/10 border border-destructive/20"
                   >
-                    <AlertCircle size={16} />
+                    <AlertCircle size={15} />
                     {error}
                   </motion.div>
                 )}
